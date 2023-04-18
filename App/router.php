@@ -7,12 +7,6 @@ use Core\DB;
 
 
 Route::get('/blog',function (){
-    $db=new DB();
-    $book=$db->table('books')->update([
-        'id'=>1,
-        'title'=>'a'
-    ]);
-//    print_r($book);
 
 });
 //Route::get('/home',[HomeController::class,'Index']);
