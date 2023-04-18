@@ -15,7 +15,7 @@ class Router
     private string $path;
     private string $method;
 
-    private function parseURL()
+    private function parseURL(): void
     {
         $this->path=strtolower(str_replace('path=','', $_SERVER['QUERY_STRING']));
         $this->method=strtolower($_SERVER['REQUEST_METHOD']);
@@ -27,18 +27,19 @@ class Router
         $this->parseURL();
     }
 
-    public static function get(string $path,array|callable $action)
+    public static function get(string $path,array|callable $action): void
     {
-        return self::addRoute(self::TYPE_GET,$path,$action);
+         self::addRoute(self::TYPE_GET,$path,$action);
     }
 
 
-    public static function post(string $path,array|callable $action)
+    public static function post(string $path,array|callable $action): void
     {
-        return self::addRoute(self::TYPE_POST,$path,$action);
+         self::addRoute(self::TYPE_POST,$path,$action);
     }
 
-    private static function generateRouteRegex($path){
+    private static function generateRouteRegex($path): string
+    {
         $segments=explode('/',rtrim($path,'/'));
         $regexRoute='';
         foreach ($segments as $segment){
@@ -52,7 +53,8 @@ class Router
         return ltrim($regexRoute,'\/');
     }
 
-    private static function addRoute(string $type,$path,array|callable $action){
+    private static function addRoute(string $type,$path,array|callable $action): void
+    {
 
         $regexRoute=self::generateRouteRegex($path);
 
@@ -72,18 +74,24 @@ class Router
     }
 
 
-    public function handleRoute(){
-        foreach ((self::$this->method) as $route){
+    public function handleRoute(): void
+    {
+
+        foreach (self::${$this->method} as $route){
+
+
             if (preg_match('/^'.$route['regex'].'$/',$this->path,$params)){
+
                 array_shift($params);
+
                 if(is_callable($route['action'])){
                     call_user_func_array($route['action'],$params);
                     die();
                 }else{
                     $class=$route['action'][0];
                     $method=$route['action'][1];
-                    die();
                     call_user_func([new $class,$method],...$params);
+                    die();
                 }
                 die();
             }

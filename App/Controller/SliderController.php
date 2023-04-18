@@ -4,8 +4,8 @@ namespace App\Controller;
 
 class SliderController
 {
-    public function index()
+    public function index(): void
     {
-
+    echo 1;
     }
 }
