@@ -35,7 +35,7 @@ abstract class DB
                 !defined('DB_USERNAME') ||
                 !defined('DB_PASSWORD') )
             {
-                throw new Exception("credentials not defined");
+                throw new \Exception("credentials not defined");
             }
 
             $this->db=new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USERNAME,DB_PASSWORD);
