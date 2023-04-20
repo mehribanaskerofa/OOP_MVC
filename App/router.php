@@ -7,7 +7,9 @@ use Core\DB;
 
 
 Route::get('/blog',function (){
-
+    $db=new DB();
+    $data=$db->all()->setWhere('id','2','=');
+    print_r($data);
 });
 //Route::get('/home',[HomeController::class,'Index']);
 

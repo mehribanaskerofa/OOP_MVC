@@ -3,7 +3,7 @@
 namespace Core;
 
 use PDO;
-abstract class DB
+ class DB
 {
     private $db;
 
@@ -15,7 +15,7 @@ abstract class DB
 
     
     
-    protected ?string $table=null;
+    protected ?string $table='books';
     private string $sql='';
     private string $select='*';
     private ?string $limit=null;
@@ -73,12 +73,13 @@ abstract class DB
         $this->select=implode(',',$select);
         return $this;
     }
-    public function setWhere(string $column, $query, string $operator)
+    public function setWhere(string $column, $query, string $operator= '=')
     {
         $this->where[]=[
             'column'=>$column,
             'query'=>$query,
             'operator'=>$operator ];
+//        die($where['column']);
         return $this;
     }
     public function handleLimit()
@@ -92,6 +93,10 @@ abstract class DB
         }
     }
     public function handleWhere(){
+        if (!$this->where) {
+            die('yoxdu');
+        }
+
         foreach ($this->where as $index=>$where){
             if($index==0){
                 $this->sql.=' where ';
@@ -102,6 +107,8 @@ abstract class DB
             $this->sql.=$where['column'].' '.$where['operator'].' ?';
             $this->params[]=$where['query'];
         }
+        die($this->sql);
+        //$this->sql.=" where id = 2";
     }
     public function buildQuery()
     {
@@ -135,7 +142,7 @@ abstract class DB
         $query->execute($this->params);
 
         if($this->currentAction==self::ACTION_SELECT) {
-//            $query->execute();
+            $query->execute();
 
             if ($this->isMultiple) {
                 $response = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -143,7 +150,8 @@ abstract class DB
                 $response = $query->fetch(PDO::FETCH_ASSOC);
             }
             return $response;
-        }else{
+        }
+        else{
             $query->execute($this->params);
         }
         $this->reset();
@@ -178,12 +186,13 @@ abstract class DB
         foreach ($this->insertData as $column=>$value){
             $this->sql.=$column.',';
             $this->params[]=$value;
+
         }
 
         $this->sql=rtrim($this->sql,',');
         $this->sql=$this->sql.') values ('
             .rtrim(str_repeat('?,',count($this->params)),',').')';
-        die($this->sql);
+//        die($this->sql);
     }
 
     public function buildUpdate()
@@ -198,16 +207,15 @@ abstract class DB
             if(!$count){
                 $this->sql.=' set ';
                 $count=true;
-//                die($this->sql);
             }
             else{
-                $this->sql.=' , ';
+                $this->sql.=', ';
             }
-            $this->sql.=$column.'=? ';
+            $this->sql.=$column.' = ? ';
         }
 
         $this->params[]=$value;
-        $this->sql=rtrim($this->sql,',');
+        $this->sql=rtrim($this->sql,', ');
 
         $this->handleWhere();
         $this->handleLimit();
