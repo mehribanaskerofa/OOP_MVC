@@ -44,7 +44,7 @@ class Router
         $regexRoute='';
         foreach ($segments as $segment){
             if(preg_match('/^{[a-zA-Z-_]+}$/',$segment)){
-                $regexRoute.='\/([a-zA-Z-\d]+)';
+                $regexRoute.='\/([ a-zA-Z-\d]+)';
             }
             else {
                 $regexRoute .= "\/" . $segment;
@@ -80,7 +80,7 @@ class Router
         foreach (self::${$this->method} as $route){
 
 
-            if (preg_match('/^'.$route['regex'].'$/',$this->path,$params)){
+            if (preg_match('/^'.$route['regex'].'$/', urldecode($this->path),$params)){
 
                 array_shift($params);
 

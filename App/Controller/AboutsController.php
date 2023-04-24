@@ -3,22 +3,17 @@
 namespace App\Controller;
 
 use App\Models\AboutModel;
-use App\Models\BlogModel;
 use App\Models\HeadSliderModel;
 use App\Models\ContactModel;
 
 
-
-
-class HomeController
+class AboutsController
 {
     public function index()
     {
-        $about=(new AboutModel())->first();
-        $blogs=( new BlogModel())->setLimit(2)->all();
         $headslider=(new HeadSliderModel())->first();
+        $about=(new AboutModel())->first();
         $contact=(new ContactModel())->first();
-
-        return view('home',compact('fcontact','headslider','about','contact','blogs'));
+        return view('about',compact('about','headslider','contact'));
     }
 }

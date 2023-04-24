@@ -3,7 +3,7 @@
 namespace Core;
 
 use PDO;
- class DB
+abstract class DB
 {
     private $db;
 
@@ -15,7 +15,7 @@ use PDO;
 
     
     
-    protected ?string $table='books';
+    protected ?string $table='';
     private string $sql='';
     private string $select='*';
     private ?string $limit=null;
@@ -80,6 +80,11 @@ use PDO;
             'query'=>$query,
             'operator'=>$operator ];
 //        die($where['column']);
+//        if (!$this->where){
+//            die('where yoxdu');
+//        }
+//        print_r($this->where);
+//        die();
         return $this;
     }
     public function handleLimit()
@@ -93,9 +98,10 @@ use PDO;
         }
     }
     public function handleWhere(){
-        if (!$this->where) {
-            die('yoxdu');
-        }
+//
+//        if (!$this->where) {
+//            die('yoxdu');
+//        }
 
         foreach ($this->where as $index=>$where){
             if($index==0){
@@ -107,7 +113,7 @@ use PDO;
             $this->sql.=$where['column'].' '.$where['operator'].' ?';
             $this->params[]=$where['query'];
         }
-        die($this->sql);
+//        die($this->sql);
         //$this->sql.=" where id = 2";
     }
     public function buildQuery()
@@ -134,26 +140,29 @@ use PDO;
    
     public function runQuery()
     {
+//        die($this->sql);
         if(!$this->sql){
-            throw new \Exception("no sql");
+            throw  \Exception("no sql");
         }
         $query=$this->db->prepare($this->sql);
 
+        print_r($this->params);
         $query->execute($this->params);
-
         if($this->currentAction==self::ACTION_SELECT) {
-            $query->execute();
 
             if ($this->isMultiple) {
                 $response = $query->fetchAll(PDO::FETCH_ASSOC);
             } else {
                 $response = $query->fetch(PDO::FETCH_ASSOC);
             }
+            $this->reset();
             return $response;
         }
-        else{
-            $query->execute($this->params);
-        }
+//        else{
+////            print_r([$this->sql,$this->params]);
+////            die();
+//            $query->execute($this->params);
+//        }
         $this->reset();
     }
 
@@ -167,6 +176,7 @@ use PDO;
         $this->isMultiple=true;
         $this->insertData=[];
         $this->updateData=[];
+        $this->params=[];
     }
     public function buildSelect()
     {
@@ -212,9 +222,9 @@ use PDO;
                 $this->sql.=', ';
             }
             $this->sql.=$column.' = ? ';
+            $this->params[]=$value;
         }
 
-        $this->params[]=$value;
         $this->sql=rtrim($this->sql,', ');
 
         $this->handleWhere();
@@ -233,8 +243,8 @@ use PDO;
         $this->setLimit(1);
         $this->buildQuery();
         $response=$this->runQuery();
-//        $this->reset();
-        return $response;
+
+        return $response ?? null;
 
     }
     public function all()
@@ -243,7 +253,6 @@ use PDO;
         $this->setMultiple(true);
         $this->buildQuery();
         $response=$this->runQuery();
-//        $this->reset();
         return $response;
     }
 
@@ -252,22 +261,19 @@ use PDO;
         $this->insertData=$insertData;
         $this->setAction(self::ACTION_CREATE);
         $this->buildQuery();
-        $response=$this->runQuery();
-//        $this->reset();
+        $this->runQuery();
     }
     public function update(array $updateData)
     {
         $this->updateData=$updateData;
         $this->setAction(self::ACTION_UPDATE);
         $this->buildQuery();
-        $response=$this->runQuery();
-//        $this->reset();
+        $this->runQuery();
     }
-    public function delete()
+    public function delete(): void
     {
         $this->setAction(self::ACTION_DELETE);
         $this->buildQuery();
-        $response=$this->runQuery();
-//        $this->reset();
+        $this->runQuery();
     }
 }
