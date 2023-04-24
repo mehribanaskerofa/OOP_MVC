@@ -79,6 +79,7 @@ class ContactController
 
         return view('admin/contactform/index',compact('contactform') ?? null);
     }
+
     public function delete($id)
     {
         $middleware=new LoginMiddleware();
