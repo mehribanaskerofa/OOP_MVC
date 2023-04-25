@@ -21,12 +21,13 @@ class LoginController
         $login=new LoginModel();
         $logindatas=$login->first();
 
-        if(!($logindatas['name']==$admin) || !($logindatas['password']==$password)){
+
+        if(!($logindatas['name']==$admin) || !password_verify($password, $logindatas['password'])){
             $data=[
                 'name'=>$admin,
                 'password'=>$password
             ];
-            return view('admin/login/loginform',compact($data));
+            return view('admin/login/loginform',compact('data'));
         }
         $_SESSION['admin']=$logindatas['name'];
 
