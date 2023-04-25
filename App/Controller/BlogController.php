@@ -14,14 +14,13 @@ class BlogController
 
     public function __construct()
     {
+        $middleware=new LoginMiddleware();
+        $middleware->checkLogin();
         $this->fileService=new FileService();
     }
 
     public function index()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         $blogModel= new BlogModel();
         $blogs=$blogModel->all();
 
@@ -30,17 +29,10 @@ class BlogController
 
     public function create()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         return view('admin/blog/form',['blog'=>null]);
     }
     public function add()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
-
         $validation=new Validation();
 
         $title=postData('title');
@@ -81,9 +73,6 @@ class BlogController
 
     public function edit($id)
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         $blog=(new BlogModel())->setWhere('id',(int)$id)->first();
         if($blog){
             return view('admin/blog/form',['blog'=>$blog]);
@@ -92,9 +81,6 @@ class BlogController
 
     public function update($id)
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         $blog=(new BlogModel())->setWhere('id',(int)$id)->first();
         if(!$blog){
             throw new \Exception('no data');
@@ -130,9 +116,6 @@ class BlogController
 
     public function delete($id)
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         (new BlogModel())->setWhere('id',(int)$id)->delete();
 
         return redirect('admin/blog');

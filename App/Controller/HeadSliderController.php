@@ -13,13 +13,13 @@ class HeadSliderController
 
     public function __construct()
     {
+        $middleware=new LoginMiddleware();
+        $middleware->checkLogin();
         $this->fileService=new FileService();
     }
 
     public function index()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
         $sliderModel= new HeadSliderModel();
         $headslider=$sliderModel->first() ?? (object)[];
         return view('admin/headslider',compact('headslider'));

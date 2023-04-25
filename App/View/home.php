@@ -160,7 +160,7 @@
                         <div class="blog-text">
                             <p>
                                 <?= $blog['text'] ?? ''?>   </p>
-                            <a class="btn custom-btn" href="">Blog detallari</a>
+                            <a class="btn custom-btn" href="<?= url('blogdetail/'.$blog['id'])?>">Blog detallari</a>
                         </div>
                     </div>
                 </div>

@@ -15,13 +15,13 @@ class ContactController
 
     public function __construct()
     {
+        $middleware=new LoginMiddleware();
+        $middleware->checkLogin();
         $this->fileService=new FileService();
     }
 
     public function index()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
         $contactModel= new ContactModel();
         $data=$contactModel->first() ?? (object)[];
         return view('admin/contact/index',compact('data'));
@@ -29,9 +29,6 @@ class ContactController
 
     public function add()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         $validation=new Validation();
         $contactModel= new ContactModel();
 
@@ -53,7 +50,7 @@ class ContactController
 
         if(!$validation->isSuccess()){
             $result['error']=$validation->displayErrors();
-            return view('admin/contact/index',compact('data','result'));
+            return view('admin/contact/index',[$data,$result]);
         }
 
         $contact=$contactModel->first();
@@ -71,9 +68,6 @@ class ContactController
 
     public function contactform()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         $contactformModel= new ContactformModel();
         $contactform=$contactformModel->all();
 
@@ -82,9 +76,6 @@ class ContactController
 
     public function delete($id)
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         (new ContactformModel())->setWhere('id',(int)$id)->delete();
 
         return redirect('admin/contact');

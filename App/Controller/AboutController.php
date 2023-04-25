@@ -14,13 +14,13 @@ class AboutController
 
     public function __construct()
     {
+        $middleware=new LoginMiddleware();
+        $middleware->checkLogin();
         $this->fileService=new FileService();
     }
 
     public function index()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
         $aboutModel= new AboutModel();
         $data=$aboutModel->first() ?? (object)[];
         return view('admin/about/index',compact('data'));
@@ -28,9 +28,6 @@ class AboutController
 
     public function add()
     {
-        $middleware=new LoginMiddleware();
-        $middleware->checkLogin();
-
         $validation=new Validation();
         $aboutModel= new AboutModel();
 
