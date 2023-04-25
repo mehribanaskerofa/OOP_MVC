@@ -50,21 +50,12 @@ class Validation
     public function pattern($name){
 
         if($name == 'array'){
-
-            if(!is_array($this->value)){
-                $this->errors[] = 'Formato campo '.$this->name.' non valido.';
-            }
-
-        }else{
-
+        }
             $regex = '/^('.$this->patterns[$name].')$/u';
             if($this->value != '' && !preg_match($regex, $this->value)){
-                $this->errors[] = 'Formato campo '.$this->name.' non valido.';
-            }
-
+                $this->errors[] = 'wrong format '.$this->name;
         }
         return $this;
-
     }
 
     public function customPattern($pattern){
@@ -80,7 +71,7 @@ class Validation
     public function required(){
 
         if((isset($this->file) && $this->file['error'] == 4) || ($this->value == '' || $this->value == null)){
-            $this->errors[] = 'Campo '.$this->name.' obbligatorio.';
+            $this->errors[] = 'set data '.$this->name;
         }
         return $this;
 
@@ -91,13 +82,13 @@ class Validation
         if(is_string($this->value)){
 
             if(strlen($this->value) < $length){
-                $this->errors[] = 'Valore campo '.$this->name.' inferiore al valore minimo';
+                $this->errors[] = 'enter more than '.$length.' characters in '.$this->name;
             }
 
         }else{
 
             if($this->value < $length){
-                $this->errors[] = 'Valore campo '.$this->name.' inferiore al valore minimo';
+                $this->errors[] = 'Enter greater than '.$length.' in '.$this->name;
             }
 
         }
@@ -110,13 +101,13 @@ class Validation
         if(is_string($this->value)){
 
             if(strlen($this->value) > $length){
-                $this->errors[] = 'Valore campo '.$this->name.' superiore al valore massimo';
+                $this->errors[] = 'Enter less than '.$length.' characters in '.$this->name;
             }
 
         }else{
 
             if($this->value > $length){
-                $this->errors[] = 'Valore campo '.$this->name.' superiore al valore massimo';
+                $this->errors[] = 'Enter less than '.$length.' in '.$this->name;
             }
 
         }
@@ -127,7 +118,7 @@ class Validation
     public function equal($value){
 
         if($this->value != $value){
-            $this->errors[] = 'Valore campo '.$this->name.' non corrispondente.';
+            $this->errors[] = $value.' dont equal to '.$this->name;
         }
         return $this;
 

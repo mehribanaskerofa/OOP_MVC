@@ -159,7 +159,7 @@
                         </div>
                         <div class="blog-text">
                             <p>
-                                <?= $blog['text'] ?? ''?>   </p>
+                                <?=  substr($blog['text'],0 ,120) ?? ''?>   </p>
                             <a class="btn custom-btn" href="<?= url('blogdetail/'.$blog['id'])?>">Blog detallari</a>
                         </div>
                     </div>
