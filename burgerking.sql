@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: localhost:3306
--- Время создания: Апр 24 2023 г., 19:44
+-- Время создания: Апр 25 2023 г., 10:47
 -- Версия сервера: 8.0.30
 -- Версия PHP: 8.1.10
 
@@ -123,7 +123,7 @@ CREATE TABLE `headslider` (
 --
 
 INSERT INTO `headslider` (`id`, `title`, `text`, `image`) VALUES
-(3, 'Keyfiyyətli Tərkib', 'Hər gün bütün dünyada BURGER KING restoranlarına on bir milyondan çox ziyarətçi gəlir. Təəccüblü deyil: bütün bunlardan sonra bizim restoranlar ixtisasların dadı və qiymətinə görə əla qiymətlərlə tanınır..', 'kOTVCw2cWw.jpg');
+(3, 'Keyfiyyətli Tərkib', 'Hər gün bütün dünyada BURGER KING restoranlarına on bir milyondan çox ziyarətçi gəlir. Təəccüblü deyil: bütün bunlardan sonra bizim restoranlar ixtisasların dadı və qiymətinə görə əla qiymətlərlə tanınır..', 'dKdk3Y7F6W.jpg');
 
 -- --------------------------------------------------------
 
@@ -142,7 +142,7 @@ CREATE TABLE `login` (
 --
 
 INSERT INTO `login` (`id`, `name`, `password`) VALUES
-(1, 'mvc@mail.ru', '1233');
+(1, 'mvc@mail.ru', '$2y$10$4MKRDL5UN3eeJkPzwzDKbOys1A9.0IpE1rb/h3YplVCpjsoNCDx.G');
 
 --
 -- Индексы сохранённых таблиц
