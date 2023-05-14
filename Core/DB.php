@@ -146,7 +146,7 @@ abstract class DB
         }
         $query=$this->db->prepare($this->sql);
 
-        print_r($this->params);
+//        print_r($this->params);
         $query->execute($this->params);
         if($this->currentAction==self::ACTION_SELECT) {
 

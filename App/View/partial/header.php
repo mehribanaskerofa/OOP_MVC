@@ -8,7 +8,7 @@
     <meta content="Free Website Template" name="description">
 
     <!-- Favicon -->
-    <link href0="<?= asset('assets/img/favicon.ico')?>" rel="icon">
+    <link href="<?= asset('assets/img/favicon.ico')?>" rel="icon">
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">

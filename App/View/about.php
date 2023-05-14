@@ -36,4 +36,4 @@
 </div>
 <!-- About End -->
 
-<?php view('/partial/footer') ?>
+<?php view('/partial/footer',compact('contact')) ?>

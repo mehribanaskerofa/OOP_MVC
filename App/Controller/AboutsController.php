@@ -14,6 +14,7 @@ class AboutsController
         $headslider=(new HeadSliderModel())->first();
         $about=(new AboutModel())->first();
         $contact=(new ContactModel())->first();
+
         return view('about',compact('about','headslider','contact'));
     }
 }

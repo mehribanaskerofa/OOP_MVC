@@ -57,8 +57,8 @@
                     <div class="col-md-6">
                         <div class="footer-contact">
                             <h2>Adresimiz</h2>
-                            <p><i class="fa fa-map-marker-alt"></i> Mammad Araz, Baku, Azerbaijan</p>
-                            <p><i class="fa fa-phone-alt"></i>+994 (5-) 737 -- -4</p>
+                            <p><i class="fa fa-map-marker-alt"></i> <?=  $contact['address']?></p>
+                            <p><i class="fa fa-phone-alt"></i><?php echo  $contact['phone']?></p>
                             <p><i class="fa fa-envelope"></i>mex_burgerking@cafe.com</p>
                             <div class="footer-social">
                                 <a href=""><i class="fab fa-youtube"></i></a>
