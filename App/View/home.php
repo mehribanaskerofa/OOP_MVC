@@ -172,4 +172,4 @@
 <!-- Blog End -->
 
 
-<?php view('/partial/footer'); ?>
+<?php view('/partial/footer',compact('contact')); ?>
